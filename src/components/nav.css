@@ -1,0 +1,27 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: var(--primary-white);
+}
+.nav__title {
+  font-weight: bold;
+  margin: 0;
+}
+.nav__button {
+  display: flex;
+  align-items: center;
+}
+.nav__icon {
+  width: 1.5rem;
+  color: var(--terctiary-gray);
+  margin-inline-end: 0.25rem;
+  animation: rotate 700ms ease-in;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,28 @@
+.dropdown__container {
+  position: relative;
+}
+.dropdown {
+  padding: 0.5rem 2rem 0.5rem 0.5rem;
+  font-size: 1rem;
+  background-color: var(--secondary-white);
+}
+.dropdown__arrow {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2rem;
+  height: 100%;
+  background-color: var(--secondary-white);
+  border: 1px solid var(--terctiary-gray);
+  border-inline-start: none;
+  pointer-events: none;
+}
+.dropdown__arrow svg {
+  width: 1rem;
+}
+.dropdown:focus + .dropdown__arrow {
+  border: 1px solid var(--primary-blue);
+  border-inline-start: none;
+}

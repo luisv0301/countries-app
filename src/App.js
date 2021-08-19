@@ -1,24 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import Nav from "./components/Nav";
+import Home from "./layout/Home";
+import CountryInfo from "./layout/CountryInfo";
 
 function App() {
+  const [countriesDefault, setCountriesDefault] = useState(null);
+  const [countries, setCountries] = useState([]);
+  const [Loadingcountries, setLoadingCountries] = useState(true);
+
+  useEffect(() => {
+    const getCountries = async () => {
+      try {
+        const resp = await fetch("https://restcountries.eu/rest/v2/all");
+        const data = await resp.json();
+        setLoadingCountries(false);
+        setCountries(data);
+        setCountriesDefault(data);
+      } catch (error) {
+        console.log(error);
+        setLoadingCountries(false);
+      }
+    };
+    getCountries();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <Nav />
+        <Switch>
+          <Route
+            path="/country/:countryName"
+            render={(props) => <CountryInfo countries={countries} {...props} />}
+          />
+          <Route
+            path="/"
+            render={(props) => (
+              <Home
+                countries={countries}
+                setCountries={setCountries}
+                countriesDefault={countriesDefault}
+                Loadingcountries={Loadingcountries}
+                {...props}
+              />
+            )}
+          />
+        </Switch>
+      </Router>
+    </>
   );
 }
 
