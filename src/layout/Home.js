@@ -17,9 +17,8 @@ export default function Home({
   const [searchValue, setSearchValue] = useState("");
   const [isResultFound, setIsResultFound] = useState(true);
   const [region, setRegion] = useState("all");
-  const debouncedValue = useDebounce(searchValue, 350)
+  const debouncedValue = useDebounce(searchValue, 350);
 
-  console.log("valor de search", searchValue)
   useEffect(() => {
     setIsResultFound(true);
     if (debouncedValue) {
@@ -30,7 +29,6 @@ export default function Home({
         ? setCountries(searchedCountry)
         : setIsResultFound(false);
     } else {
-      console.log("reseteando...")
       setCountries(countriesDefault);
     }
   }, [debouncedValue]);
