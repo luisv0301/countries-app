@@ -4,6 +4,9 @@ img {
 }
 
 article {
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
   background-color: var(--primary-white);
 }
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import useDebounce from "../useDebounce";
 
 import Countries from "../components/Countries";
 import ActionsBar from "../components/ActionsBar";
@@ -9,28 +10,30 @@ import "./home.css";
 
 export default function Home({
   setCountries,
-  countriesDefault,
   countries,
+  countriesDefault,
   Loadingcountries,
 }) {
   const [searchValue, setSearchValue] = useState("");
+  const [isResultFound, setIsResultFound] = useState(true);
   const [region, setRegion] = useState("all");
-  const [result, setResult] = useState(false);
+  const debouncedValue = useDebounce(searchValue, 350)
 
+  console.log("valor de search", searchValue)
   useEffect(() => {
-    if (searchValue) {
-      setResult(false);
+    setIsResultFound(true);
+    if (debouncedValue) {
       const searchedCountry = countriesDefault.filter((country) =>
         country.name.toLowerCase().includes(searchValue.toLowerCase())
       );
       searchedCountry.length > 0
         ? setCountries(searchedCountry)
-        : setResult(true);
+        : setIsResultFound(false);
     } else {
-      setResult(false);
+      console.log("reseteando...")
       setCountries(countriesDefault);
     }
-  }, [searchValue]);
+  }, [debouncedValue]);
 
   useEffect(() => {
     if (region === "all") return setCountries(countriesDefault);
@@ -53,13 +56,13 @@ export default function Home({
         />
       </ActionsBar>
       <main>
-        {result ? (
-          <h1 className="home__title">Sorry, country not found.</h1>
-        ) : (
+        {isResultFound ? (
           <Countries
             countries={countries}
             Loadingcountries={Loadingcountries}
           />
+        ) : (
+          <h1 className="home__title">Sorry, country not found.</h1>
         )}
       </main>
     </div>

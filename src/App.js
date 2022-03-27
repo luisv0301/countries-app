@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     const getCountries = async () => {
       try {
-        const resp = await fetch("https://restcountries.eu/rest/v2/all");
+        const resp = await fetch("https://restcountries.com/v2/all");
         const data = await resp.json();
         setLoadingCountries(false);
         setCountries(data);
@@ -43,6 +43,7 @@ function App() {
                 setCountries={setCountries}
                 countriesDefault={countriesDefault}
                 Loadingcountries={Loadingcountries}
+                setLoadingCountries={setLoadingCountries}
                 {...props}
               />
             )}
